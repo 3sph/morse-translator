@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Translator</title>
+    <style>
+        .textClass {
+            font-size: 200%;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <script>
+        // Model
+        const alphabetArray = "abcdefghijklmnopqrstuvwxyzæøå";
+        const morseCodeArray = [ '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....',
+                            '..', '.---', '-.-', '.-..', '--', '-.', '---', '.--.',
+                            '--.-', '.-.', '...', '-', '..-', '...-', '.--', '-..-',
+                            '-.--', '--..', ' ', '·−·−', '−−−·', '·−−·−'];
+        let lettersFromInput = " ";
+        let letterTranslatedToMorse = " ";
+      
+        // View 
+        show();
+        function show() {
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                Skriv inn tekst og gjør om til morse (trykk enter)
+                <input type="text" id="inputText">
+                <div class="textClass">
+                    ${lettersFromInput}
+                    <p>${letterTranslatedToMorse}</p>
+                </div>
+            `;
+            
+            const inputText = document.getElementById("inputText");
+            inputText.addEventListener("change", () => translator(inputText.value));
+        } 
+
+        // Controller
+        function translator(valueFromInput) {
+            lettersFromInput = valueFromInput.toUpperCase();
+            
+            for (const letter of valueFromInput) {
+                const singleLetterFromInput = letter;
+                const letterIndex = alphabetArray.indexOf(singleLetterFromInput);
+
+                if (letterIndex !== -1) {
+                    letterTranslatedToMorse += morseCodeArray[letterIndex] + " ";
+                } else {
+                    // Handle unknown characters here
+                    letterTranslatedToMorse += " ";
+                }
+            }
+            show();
+            letterTranslatedToMorse = " ";
+        }                   
+    </script>
+</body>
+</html>
